@@ -1,5 +1,5 @@
-# SSH (first lab)
-- Change the name of a router: 
+# SSH (1st Lab)
+- Change the name of a router or switch: 
 ```
 Router(config)# hostname RTA
 RTA(config)#
@@ -70,4 +70,38 @@ Switch(config-if)# no shutdown
 ```
 SW1(config)# interface range F0/2-24, G0/2
 SW1(config-if-range)# shutdown 
+```
+# OSPF (2nd Lab)
+- Configure OSPF MD5 authentication for all the routers in an area.
+```
+R1(config)# router ospf 1
+R1(config-router)# area 0 authentication message-digest
+```
+- Configure the MD5 key for all the routers in an area (**Note that** interface port is the one that is connected with the other router).
+```
+R1(config)# interface g0/0/0
+R1(config-if)# ip ospf message-digest-key 1 md5 MD5pa55
+```
+# NTP (2nd Lab)
+- Check the current NTP and clock settings.
+```
+R1# show ntp status
+R1# show clock detail
+```
+- Configure R1 and R2 as NTP Clients. Use the ntp server command to specify an NTP server.
+```
+R1(config)# ntp server 209.165.200.225
+```
+# Syslog (2nd Lab)
+- Send log events to the Syslog server (10.0.1.254 is syslog server ip).
+```
+R1(config)# logging 10.0.1.254
+```
+- Set the clock manually.
+```
+S1# clock set 11:47:00 July 10 2013
+```
+- Send timestamp with logs it sends to the Syslog server via the established SSH session.
+```
+S1(config)# service timestamps log datetime msec
 ```
