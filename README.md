@@ -32,7 +32,7 @@ RTA(config)# ip domain-name netsec.com
 ```
 -   Create a user of your choosing with a strong encrypted password.
 ```
-RTA(config)# username any_user secret any_password
+RTA(config)# username ANY_USER privilege [15] secret ANY_PASSWORD
 ```
 - Generate 1024-bit RSA keys.
 ```
@@ -93,7 +93,7 @@ R1# show clock detail
 R1(config)# ntp server 209.165.200.225
 ```
 # Syslog (2nd Lab)
-- Send log events to the Syslog server (10.0.1.254 is syslog server ip).
+- Send log events to the Syslog server ( `10.0.1.254` is syslog server ip).
 ```
 R1(config)# logging 10.0.1.254
 ```
@@ -105,3 +105,58 @@ S1# clock set 11:47:00 July 10 2013
 ```
 S1(config)# service timestamps log datetime msec
 ```
+# AAA (3rd Lab)
+- Enable AAA services
+```
+R(config)# aaa new-model
+```
+##### Local AAA Authentication
+- Specify the list name and the order to use.
+```
+R(config)# aaa authentication login LIST_NAME local group radius group tacacs+ local-case
+```
+##### Server-Based AAA Authentication
+- Configure TACACS+ server
+```
+R(config)# tacacs server TAC_SERVER
+R(config-server-tacacs)# address ipv4 192.168.1.101
+R(config-server-tacacs)# single-connection
+R(config-server-tacacs)# key TACACS-pa55w0rd
+R(config-server-tacacs)# exit
+```
+- Configure RADIUS server
+```
+R(config)# radius server RAD_SERVER
+R(config-radius-server)# address ipv4 192.168.1.100 auth-port 1812 acct-port 1813
+R(config-radius-server)# key RADIUS-pa55w0rd
+R(config-radius-server)# exit
+```
+- Apply TACACS+ authentication
+```
+R(config)# aaa authentication login TAC_SERVER group tacacs+ group radius local local-case
+```
+- Apply Radius authentication
+```
+R(config)# aaa authentication login RAD_SERVER group radius group tacacs+ local local-case
+```
+- Apply Authentication on Console Line
+```
+R(config)# line console 0
+R(config-line)# login authentication LIST_NAME
+```
+- Apply Authentication on VTY Line (don the same previous steps in lab 1 for configuring ssh)
+```
+R(config)# line vty 0 4
+R(config-line)# transport input ssh
+R(config-line)# login authentication LIST_NAME
+```
+- Lock user accounts after failed attempts
+```
+R(config)# aaa local authentication attempts max-fail [NUMBER]
+```
+- Lock user account
+```
+R(config)# clear aaa local user lockout
+```
+# ACL (4th Lab)
+- 
