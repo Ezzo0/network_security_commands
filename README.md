@@ -80,7 +80,7 @@ R1(config-router)# area 0 authentication message-digest
 - Configure the MD5 key for all the routers in an area (**Note that** interface port is the one that is connected with the other router).
 ```
 R1(config)# interface g0/0/0
-R1(config-if)# ip ospf message-digest-key 1 md5 MD5pa55
+R1(config-if)# ip ospf message-digest-key 1 md5 [key]
 ```
 # NTP (2nd Lab)
 - Check the current NTP and clock settings.
@@ -154,7 +154,7 @@ R(config-line)# login authentication [LIST_NAME]
 ```
 R(config)# aaa local authentication attempts max-fail [NUMBER]
 ```
-- Lock user account
+- Unlock user account
 ```
 R(config)# clear aaa local user lockout
 ```
