@@ -104,8 +104,74 @@ FROM employees
 WHERE salary > 50000;
 WITH READ ONLY
 ```
-
 # Removing a View
 ```
 DROP VIEW high_salary_employees
+```
+# Creating Users
+```
+CREATE USER username IDENTIFIED BY password;
+```
+# Granting System Privileges
+```
+GRANT create session, create table TO new_user;
+```
+# Granting Object Privileges
+```
+GRANT select, insert on table TO user, second_user;
+```
+### System Privileges
+System privileges allow users to perform administrative tasks at the database level. Some commonly used system privileges include:
+1. create session: allows a user to connect to the database.
+2. create table: allows a user to create tables in their own schema.
+3. create view: allows a user to create views in their own schema.
+4. create procedure: allows a user to create stored procedures and functions.
+5. create sequence: allows a user to create sequences.
+6. create trigger: allows a user to create triggers.
+7. create user: allows a user to create new database users.
+8. drop user: allows a user to drop existing database users.
+9. grant any privilege: allows a user to grant any system or object privilege to other users.
+10. alter any table: allows a user to alter any table in the database.
+11. select any table: allows a user to select data from any table in the database.
+12. insert any table: allows a user to insert data into any table.
+13. update any table: allows a user to update data in any table.
+14. delete any table: allows a user to delete data from any table.
+15. execute any procedure: allows a user to execute any stored procedure or function.
+### Object Privileges
+Object privileges allow users to perform specific actions on database objects (tables, views, procedures, etc.). Here are some commonly used object privileges:
+1. **select**: allows a user to select data from a table or view.
+2. **insert**: allows a user to insert data into a table or view.
+3. **update**: allows a user to update existing data in a table or view.
+4. **delete**: allows a user to delete data from a table or view.
+5. **execute**: allows a user to execute a stored procedure or function.
+6. **references**: allows a user to create foreign keys that reference the specified table.
+7. **index**: allows a user to create an index on a table.
+8. **alter**: allows a user to alter the structure of a table or view.
+9. **drop**: allows a user to drop a table, view, or other database object.
+10. **grant**: allows a user to grant specified object privileges to other users.
+# Create Role
+```
+CREATE ROLE role_name;
+```
+# Assigning the Role to Users
+```
+GRANT role_name TO user, second_user;
+```
+# Changing password
+```
+ALTER USER username IDENTIFIED BY new_password;
+```
+# Passing privilages
+```
+GRANT select, insert ON employees
+TO new_user
+WITH GRANT OPTION;
+```
+# Revoking Object Privilages
+```
+REVOKE SELECT ON employees FROM new_user;
+```
+# Revoking System Privilages
+```
+REVOKE create session FROM new_user;
 ```
